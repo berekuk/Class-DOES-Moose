@@ -21,5 +21,7 @@ use Test::More;
 }
 
 ok(X->new->DOES('foo'));
+ok(X->new->DOES('foo')); # checking caches
+ok(X->new->DOES('bar'));
 
 done_testing;

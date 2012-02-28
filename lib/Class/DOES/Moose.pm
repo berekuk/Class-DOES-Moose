@@ -14,20 +14,13 @@ Moose::Exporter->setup_import_methods(
 
 sub extra_does {
     my $meta = shift;
-    my @does = shift;
+    my @does = @_;
 
     if (defined $MooseX::Role::Parameterized::CURRENT_METACLASS) {
         $meta = $MooseX::Role::Parameterized::CURRENT_METACLASS;
     }
 
-#    warn Dumper($meta->{extra_does});
     push @{ $meta->{extra_does} }, @does;
-#    warn Dumper($meta->{extra_does});
-    #$meta->add_attribute('extra_does' => (
-    #    is => 'ro',
-    #    isa => 'ArrayRef',
-    #    default => sub { \@does },
-    #));
 
     Moose::Util::apply_all_roles($meta, 'Class::DOES::Moose::Role');
 }
