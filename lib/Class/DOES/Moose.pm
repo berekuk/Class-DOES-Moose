@@ -1,5 +1,19 @@
 package Class::DOES::Moose;
 
+# ABSTRACT: syntax sugar for adding extra non-Moose roles to Moose classes
+
+=head1 SYNOPSIS
+
+    use Moose;
+    use Class::DOES::Moose;
+
+    extra_does qw/ My::Foo My::Bar /;
+
+    __PACKAGE__->new->DOES('My::Foo'); # 1
+    __PACKAGE__->new->does('My::Foo'); # 0
+
+=cut
+
 use namespace::autoclean;
 
 use Moose ();
@@ -24,5 +38,11 @@ sub extra_does {
 
     Moose::Util::apply_all_roles($meta, 'Class::DOES::Moose::Role');
 }
+
+=head1 SEE ALSO
+
+L<Class::DOES>
+
+=cut
 
 1;
