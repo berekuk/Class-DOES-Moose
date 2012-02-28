@@ -9,9 +9,9 @@ around 'DOES' => sub {
 
     return 1 if $self->$orig(@_);
 
-    my @roles = $self->meta->calculate_all_roles_with_inheritance;
-    @roles = grep { $_->{extra_does} } @roles;
-    return 1 if grep { $_[0] eq $_ } map { @{ $_->{extra_does} } } @roles;
+    my @meta = map { $_->meta, $_->meta->calculate_all_roles_with_inheritance } $self, $self->meta->linearized_isa;
+    @meta = grep { $_->{extra_does} } @meta;
+    return 1 if grep { $_[0] eq $_ } map { @{ $_->{extra_does} } } @meta;
 
     return 0;
 };
